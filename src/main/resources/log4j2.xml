@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="OFF">
+  <appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{yyyy.MM.dd 'at' HH:mm:ss.SSS} [%t] %-5level %L %logger{36} - %msg%n" />
+    </Console>
+    <RollingFile bufferedIO="true" bufferSize="18192" name="allFile" fileName="/Users/songhengliang/java/workspace-shl/log/projectTemplate/logs/debug/message.log" filePattern="/Users/songhengliang/java/workspace-shl/log/projectTemplate/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+      <PatternLayout
+        pattern="%d{yyyy.MM.dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n" />
+      <SizeBasedTriggeringPolicy size="100 MB" />
+    </RollingFile>
+    <RollingFile bufferedIO="true" bufferSize="18192" name="infoFile" fileName="/Users/songhengliang/java/workspace-shl/log/projectTemplate/logs/info/message.log" filePattern="/Users/songhengliang/java/workspace-shl/log/projectTemplate/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+      <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+      <PatternLayout
+        pattern="%d{yyyy.MM.dd 'at' HH:mm:ss z} - %msg%xEx%n" />
+      <SizeBasedTriggeringPolicy size="100 MB" />
+    </RollingFile>
+    <RollingFile bufferedIO="true" bufferSize="18192" name="ERRORFILE" fileName="/Users/songhengliang/java/workspace-shl/log/projectTemplate/logs/error/error.log" filePattern="/Users/songhengliang/java/workspace-shl/log/projectTemplate/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+      <!--<MarkerFilter level="fatal" marker="FLOW" onMatch="ACCEPT" onMismatch="DENY"/>-->
+      <PatternLayout
+        pattern="%d{yyyy.MM.dd HH:mm:ss}-%msg%xEx%n" />
+      <SizeBasedTriggeringPolicy size="100 MB" />
+    </RollingFile>
+  </appenders>
+
+  <loggers>
+    <root level="debug">
+      <appender-ref ref="Console" />
+      <appender-ref ref="allFile" />
+      <appender-ref ref="infoFile" />
+      <appender-ref ref="ERRORFILE" />
+    </root>
+  </loggers>
+</configuration>

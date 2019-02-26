@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+  <settings>
+    <!-- 开启驼峰匹配 -->
+    <setting name="mapUnderscoreToCamelCase" value="true"/>
+    <!-- 二级缓存的开关，默认是开启的true -->
+    <setting name="cacheEnabled" value="false"/>
+    <!-- 开启延迟加载 -->
+    <!-- <setting name="lazyLoadingEnabled" value="true"/>
+    <setting name="aggressiveLazyLoading" value="false"/> -->
+  </settings>
+
+  <plugins>
+    <!-- 分页助手 -->
+    <!-- com.github.pagehelper为PageHelper类所在包名 -->
+    <plugin interceptor="com.github.pagehelper.PageHelper">
+      <!-- 方言 -->
+      <property name="dialect" value="mysql"/>
+      <!-- 该参数默认为false -->
+      <!-- 设置为true时，使用RowBounds分页会进行count查询，查询数据总条数-->
+      <property name="rowBoundsWithCount" value="true"/>
+
+      <!-- 该参数默认为false -->
+      <!-- 设置为true时，会将RowBounds第一个参数offset当成pageNum页码使用 -->
+      <!-- 和startPage中的pageNum效果一样 -->
+      <property name="offsetAsPageNum" value="true"/>
+      <!-- 设置为true时，如果pageSize=0或者RowBounds.limit = 0就会查询出全部的结果 -->
+      <!-- （相当于没有执行分页查询，但是返回结果仍然是Page类型） -->
+      <property name="pageSizeZero" value="true"/>
+      <!-- 3.3.0版本可用 - 分页参数合理化，默认false禁用 -->
+      <!-- 启用合理化时，如果pageNum<1会查询第一页，如果pageNum>pages会查询最后一页 -->
+      <!-- 禁用合理化时，如果pageNum<1或pageNum>pages会返回空数据 -->
+      <property name="reasonable" value="false"/>
+    </plugin>
+
+
+    <!-- 通用Mapper插件 -->
+    <!--<plugin interceptor="com.github.abel533.mapperhelper.MapperInterceptor">-->
+      <!--&lt;!&ndash;主键自增回写方法,默认值MYSQL,详细说明请看文档&ndash;&gt;-->
+      <!--<property name="IDENTITY" value="MYSQL"/>-->
+      <!--&lt;!&ndash;通用Mapper接口，多个通用接口用逗号隔开&ndash;&gt;-->
+      <!--<property name="mappers" value="com.taotao.manage.base.mapper.TaotaoMapper"/>-->
+    <!--</plugin>-->
+  </plugins>
+
+</configuration>

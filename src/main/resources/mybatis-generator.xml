@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!--
+        Mybatis生成Mapper配置文件
+        1，cmd切换至项目根目录
+        2，mvn mybatis-generator:generate -Dmybatis.generator.configurationFile=src/test/resources/dispatchdb-generator.xml -Dmybatis.generator.overwrite=true
+     -->
+<generatorConfiguration>
+  <classPathEntry
+    location="/Users/songhengliang/java/workspace-dianwoda/repository/mysql/mysql-connector-java/5.1.35/mysql-connector-java-5.1.35.jar" />
+
+  <context id="DB2Tables" targetRuntime="MyBatis3">
+    <property name="beginningDelimiter" value="`" />
+    <property name="endingDelimiter" value="`" />
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+    <plugin type="com.itfsw.mybatis.generator.plugins.LimitPlugin"/>
+
+    <!-- 数据Model属性对应Column获取插件 -->
+    <plugin type="com.itfsw.mybatis.generator.plugins.ModelColumnPlugin"/>
+    <!-- 批量插入插件 -->
+    <plugin type="com.itfsw.mybatis.generator.plugins.BatchInsertPlugin">
+      <!--
+            开启后可以实现官方插件根据属性是否为空决定是否插入该字段功能
+            需开启allowMultiQueries=true多条sql提交操作，所以不建议使用！插件默认不开启
+            -->
+      <property name="allowMultiQueries" value="false"/>
+    </plugin>
+
+
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+      connectionURL="jdbc:mysql://127.0.0.1/Test" userId="root"
+      password="root">
+    </jdbcConnection>
+
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+
+    <!-- 与表映射的类 -->
+    <javaModelGenerator targetPackage="com.shl.projectTemplate.domain.entity"
+      targetProject="src/main/java">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+    <!-- *Mapper.xml -->
+    <sqlMapGenerator targetPackage="mybatis.mappers" targetProject="src/main/resources">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+    <!-- *Mapper.xml对应的*Mapper.java(接口) -->
+    <javaClientGenerator type="XMLMAPPER"
+      targetPackage="com.shl.projectTemplate.domain.mapper" targetProject="src/main/java">
+      <property name="enableSubPackages" value="false" />
+    </javaClientGenerator>
+
+
+
+    <table tableName="TestProjectTemplate" domainObjectName="TestProjectTemplate" delimitIdentifiers="true">
+      <generatedKey column="id" sqlStatement="MYSQL" identity="true" type="post"/>
+    </table>
+
+  </context>
+
+
+
+</generatorConfiguration>

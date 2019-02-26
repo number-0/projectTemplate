@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:p="http://www.springframework.org/schema/p"
+  xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+  <!-- 使用spring自带的占位符替换功能 引入外部的资源文件 -->
+  <!--<bean
+    class="com.shl.projectTemplate.common.spring.exetend.ExtendedPropertyPlaceholderConfigurer">
+    &lt;!&ndash; 允许JVM参数覆盖 &ndash;&gt;
+    <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+    &lt;!&ndash; 忽略没有找到的资源文件 &ndash;&gt;
+    <property name="ignoreResourceNotFound" value="true"/>
+    &lt;!&ndash; 配置资源文件 &ndash;&gt;
+    <property name="locations">
+      <list>
+        <value>classpath:properties/jdbc.properties</value>
+        &lt;!&ndash;<value>classpath:env.properties</value>
+        <value>classpath:redis.properties</value>
+        <value>classpath:httpclient.properties</value>
+        <value>classpath:rabbitmq.properties</value>&ndash;&gt;
+      </list>
+    </property>
+  </bean>-->
+  <!-- 使用spring自带的占位符替换功能 引入外部的资源文件properties -->
+    <bean id="propertyPlaceholderConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:properties/jdbc.properties</value>
+            </list>
+        </property>
+    </bean>
+
+  <!--
+      自动扫描包，加载注解定义bean ：使生效 @Controller、@Service、@Repository、@Component
+      已经包括 <context:annotation-config> ：使生效 @Resource、@PostConstruct、@PreDestroy、@Autowired
+  -->
+  <context:component-scan base-package="com.shl"/>
+
+
+  <!-- 激活自动代理功能:注解配置切面 -->
+  <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+  <!-- 数据源 -->
+  <bean id="wDataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+    <!--<property name="filters" value="stat" />-->
+    <property name="driverClassName" value="${w.jdbc.master.driver}"/>
+    <property name="url" value="${w.datasource.url}"/>
+    <property name="username" value="${w.datasource.username}"/>
+    <property name="password" value="${w.datasource.password}"/>
+    <property name="initialSize" value="${datasource.initialSize}"/>
+    <property name="maxActive" value="${datasource.maxActive}"/>
+    <property name="minIdle" value="${datasource.minIdle}"/>
+    <property name="maxWait" value="${datasource.maxWait}"/>
+    <property name="defaultAutoCommit" value="${datasource.defaultAutoCommit}"/>
+    <property name="removeAbandoned" value="${datasource.removeAbandoned}"/>
+    <property name="removeAbandonedTimeout" value="${datasource.removeAbandonedTimeout}"/>
+    <property name="logAbandoned" value="${datasource.logAbandoned}"/>
+    <property name="testOnBorrow" value="${datasource.testOnBorrow}"/>
+    <property name="validationQuery" value="${datasource.validationQuery}"/>
+    <property name="testWhileIdle" value="${datasource.testWhileIdle}"/>
+    <property name="timeBetweenEvictionRunsMillis" value="${datasource.timeBetweenEvictionRunsMillis}"/>
+    <property name="minEvictableIdleTimeMillis" value="${datasource.minEvictableIdleTimeMillis}"/>
+    <property name="poolPreparedStatements" value="${datasource.poolPreparedStatements}"/>
+    <property name="maxOpenPreparedStatements" value="${datasource.maxOpenPreparedStatements}"/>
+  </bean>
+  <!-- 数据源 -->
+  <bean id="rDataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+    <!--<property name="filters" value="stat" />-->
+    <property name="driverClassName" value="${r.jdbc.master.driver}"/>
+    <property name="url" value="${r.datasource.url}"/>
+    <property name="username" value="${r.datasource.username}"/>
+    <property name="password" value="${r.datasource.password}"/>
+    <property name="initialSize" value="${datasource.initialSize}"/>
+    <property name="maxActive" value="${datasource.maxActive}"/>
+    <property name="minIdle" value="${datasource.minIdle}"/>
+    <property name="maxWait" value="${datasource.maxWait}"/>
+    <property name="defaultAutoCommit" value="${datasource.defaultAutoCommit}"/>
+    <property name="removeAbandoned" value="${datasource.removeAbandoned}"/>
+    <property name="removeAbandonedTimeout" value="${datasource.removeAbandonedTimeout}"/>
+    <property name="logAbandoned" value="${datasource.logAbandoned}"/>
+    <property name="testOnBorrow" value="${datasource.testOnBorrow}"/>
+    <property name="validationQuery" value="${datasource.validationQuery}"/>
+    <property name="testWhileIdle" value="${datasource.testWhileIdle}"/>
+    <property name="timeBetweenEvictionRunsMillis" value="${datasource.timeBetweenEvictionRunsMillis}"/>
+    <property name="minEvictableIdleTimeMillis" value="${datasource.minEvictableIdleTimeMillis}"/>
+    <property name="poolPreparedStatements" value="${datasource.poolPreparedStatements}"/>
+    <property name="maxOpenPreparedStatements" value="${datasource.maxOpenPreparedStatements}"/>
+  </bean>
+  <!-- 动态数据源 -->
+  <bean id="dynamicDataSource" class="com.shl.projectTemplate.datasource.DynamicDataSource">
+    <!-- 通过key-value关联数据源 -->
+    <property name="targetDataSources">
+      <map>
+        <entry value-ref="wDataSource" key="WDS"/>
+        <entry value-ref="rDataSource" key="RDS"/>
+      </map>
+    </property>
+    <property name="defaultTargetDataSource" ref="wDataSource"/>
+  </bean>
+
+</beans>
