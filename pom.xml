@@ -175,6 +175,11 @@
       <artifactId>commons-io</artifactId>
       <version>2.6</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-collections4</artifactId>
+      <version>4.3</version>
+    </dependency>
     <!-- 时间操作组件 -->
     <dependency>
       <groupId>joda-time</groupId>
