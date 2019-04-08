@@ -51,7 +51,7 @@
   <!-- 数据源 -->
   <bean id="wDataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
     <!--<property name="filters" value="stat" />-->
-    <property name="driverClassName" value="${jdbc.master.driver}"/>
+    <property name="driverClassName" value="${jdbc.driver}"/>
     <property name="url" value="${w.datasource.url}"/>
     <property name="username" value="${w.datasource.username}"/>
     <property name="password" value="${w.datasource.password}"/>
@@ -74,7 +74,7 @@
   <!-- 数据源 -->
   <bean id="rDataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
     <!--<property name="filters" value="stat" />-->
-    <property name="driverClassName" value="${jdbc.master.driver}"/>
+    <property name="driverClassName" value="${jdbc.driver}"/>
     <property name="url" value="${r.datasource.url}"/>
     <property name="username" value="${r.datasource.username}"/>
     <property name="password" value="${r.datasource.password}"/>
